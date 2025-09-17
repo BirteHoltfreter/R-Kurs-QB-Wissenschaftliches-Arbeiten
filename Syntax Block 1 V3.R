@@ -2,17 +2,18 @@
 #### Vorbereitungen 
 ####################################################################################
 
-
-source(url("https://nextcloud.uni-greifswald.de/index.php/s/gwm3rtg99o2X2s4/Syntax Block 1 V3.R"))
-source(url("https://nextcloud.uni-greifswald.de/index.php/s/gwm3rtg99o2X2s4/"))
-
 rm(list = ls())
 
-# Return working directory
-WD <- getwd(); WD
-
-# Set working directory to old directory
-setwd(WD)
+# URL to the raw .RData file (important: must be the raw file link!)
+url <- "https://raw.githubusercontent.com/BirteHoltfreter/R-Kurs-QB-Wissenschaftliches-Arbeiten/refs/heads/main/Daten_Blockseminar2.rdata"
+# Temporary file location
+destfile <- tempfile(fileext = ".RData")
+# Download the file
+download.file(url, destfile, mode = "wb")
+# Load the .RData into the R environment
+load(destfile)
+# List the objects that were loaded
+ls()
 
 # Pakete laden (falls noch nicht installiert, vorher mit install.packages() installieren)
 # Pakete enthalten Funktionen und Tools, die von der R Community entwickelt wurden.
