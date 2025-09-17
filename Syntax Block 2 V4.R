@@ -33,6 +33,8 @@ library(Epi)
 ## Daten laden
 ## ------------------------------------------------------------
 
+rm(list = ls())
+
 #load("Daten_Blockseminar2.rdata")
 
 # URL to the raw .RData file (important: must be the raw file link!)

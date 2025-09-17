@@ -1,6 +1,7 @@
 library(dplyr)
 library(ggplot2)
 
+rm(list = ls())
 
 # URL to the raw .RData file (important: must be the raw file link!)
 url <- "https://raw.githubusercontent.com/BirteHoltfreter/R-Kurs-QB-Wissenschaftliches-Arbeiten/refs/heads/main/Daten_Blockseminar2.rdata"
