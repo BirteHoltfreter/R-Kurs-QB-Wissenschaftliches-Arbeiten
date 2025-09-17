@@ -395,8 +395,6 @@ ggplot(data=dat, aes(x = Gewicht)) +
       theme_minimal() +
         scale_x_continuous(breaks=c(30,40,50,60,70,80,90,100,110,120,130))
 
-# Histogramme für alle Variablen in einem Data Frame (Hmisc package)
-hist.data.frame(dat)
 
 ####################################################################################
 # 7. Boxplots für eine numerische Variable
