@@ -128,8 +128,8 @@ anova(M1)
 #### 5. Modellgüte und Modellfit (R2, p-Werte, AIC und BIC)
 M1 <- lm(Zahnzahl_max28 ~ rcs(Alter_exakt,3) + Geschlecht + Bildungslevel + Rauchen + Diabetes + HbA1c, data=dat)
 summary(M1)$r.squared    
-AIC(M1)
-BIC(M1)
+AIC(M1) #Bestraft die Anzahl der Parameter linear (mit Faktor 2)
+BIC(M1) #Bestraft Komplexität stärker als AIC (durch ln(n))
 
 #### 6. Modelldiagnostik
 
@@ -209,10 +209,10 @@ head(pred_df)
 # Plotten der Vorhersagewerte mit dem 95% KI (geom_ribbons = "flächige Bänder")
 ggplot(pred_df, aes(x = Alter_exakt, y = yhat)) +
   geom_line(color = "steelblue") +
-    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
-      labs(x = "Alter", y = "Vorhergesagte Zahnzahl", 
-         title = "Zahnzahl-Vorhersage in Abhängigkeit vom Alter") +
-            theme_minimal()
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+  labs(x = "Alter", y = "Vorhergesagte Zahnzahl", 
+       title = "Zahnzahl-Vorhersage in Abhängigkeit vom Alter") +
+  theme_minimal()
 
 #### 9. Interaktionseffekte // Effektmodifikation prüfen
 
@@ -247,11 +247,11 @@ pred$conf.high
 ggplot(pred, aes(x = x, y = predicted, color = group, fill = group)) +
   geom_line(size = 1) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
-    labs(
-      x = "Alter in Jahren",
-      y = "Vorhergesagte Zahnzahl",
-      title = "Interaktion von Alter und Geschlecht"
-    ) 
+  labs(
+    x = "Alter in Jahren",
+    y = "Vorhergesagte Zahnzahl",
+    title = "Interaktion von Alter und Geschlecht"
+  ) 
 
 #Aufgabe 1: Untersuchen Sie den Zusammenhang zwischen dem Diabetesstatus und den 
 #Erythrozyten-Leveln unter Adustierung für Alter, Geschlecht, Rauchen, Bildung und Zusammenleben.
@@ -322,17 +322,17 @@ M3$stats["R2"]
 
 #### 3. Diagnostik - einflussreiche Beobachtungen; Residuenstruktur prüfen
 
-# Standardisierte Residuen
-
+# Standardisierte Residuen: Differenz zwischen beobachteten und dem durch das Modell vorhergesagten Wert
 plot(rstandard(M2, type = "pearson"), main = "Standardisierte Residuen", ylab = "rstandard")
 
-# Deviance Residuen
+# Deviance Residuen: Differenz zwischen beobachteten und dem durch das Modell vorhergesagten Wert auf Basis der Devianz; 
+#Prüfung der Modellgüte; Identifikation schlecht passender Beobachtungen
 plot(residuals(M2, type = "deviance"), main = "Deviance Residuen", ylab = "Residuals")
 
-# Cook's Distance
+# Cook's Distance: beeinflusst eine einzelne Beobachtung das Modell?
 plot(cooks.distance(M2), type = "h", main = "Cook's Distance")
 
-# Leverage
+# Leverage: beeinflussen bestimmte Beobachtungen mit ungewöhnlichen Wertekombinationen die Modellanpassung?
 plot(hatvalues(M2), type = "h", main = "Leverage (hat values)")
 
 #alle Diagnostikplots zusammen
